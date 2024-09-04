@@ -24,7 +24,16 @@ repositories {
 }
 
 dependencies {
-	implementation 'com.h2database:h2'
+	/*
+	runtimeOnly 라이브러리가 실행 시에만 필요하고, 컴파일 시에는 필요 없는 경우 사용.
+	 */
+	runtimeOnly 'com.h2database:h2'
+
+	/*
+	implementation 라이브러리가 컴파일 시와 실행 시 모두 필요할 때 사용.
+	 */
+//	implementation 'com.h2database:h2'
+
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
