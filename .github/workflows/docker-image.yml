@@ -54,3 +54,4 @@ jobs:
             docker pull yawning5/ec2study:latest
             docker stop $(docker ps -q --filter ancestor=yawning5/ec2study:latest)
             docker run --rm -d -p 8080:8080 yawning5/ec2study:latest
+          debug: true
