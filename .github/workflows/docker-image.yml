@@ -7,7 +7,6 @@ on:
     branches:
       - master
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,6 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # 프로젝트를 build 해야 하기 때문에 알맞은 jdk 설정
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
@@ -26,6 +26,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
+      # build 명령어 실행하여 .jar 파일 만들어 줌
       - name: Build with Gradle
         run: ./gradlew build
 
