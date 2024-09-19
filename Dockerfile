@@ -11,4 +11,4 @@ COPY build/libs/study-0.0.1-SNAPSHOT.jar /app/study-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
 
 # Command to run the application
-ENTRYPOINT ["java", "-jar", "/app/your-application.jar"]
+ENTRYPOINT ["java", "-jar", "/app/study-0.0.1-SNAPSHOT.jar"]
