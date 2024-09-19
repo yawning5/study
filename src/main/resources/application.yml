@@ -7,6 +7,10 @@ spring:
       enabled: true
       path: /h2
 
+      # EC2 에서 서버를 구동시켰을때 h2 를 접근하기 위한 방법
+      settings:
+        web-allow-others: true
+
   datasource:
 
     # h2 console 에서 url 부분을 똑같이 맞춰줘야 함
