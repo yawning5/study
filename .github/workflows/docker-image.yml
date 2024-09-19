@@ -1,0 +1,30 @@
+# .gitHub/workflows/docker-image.yml
+name: Build and Push Docker Image
+
+# master 브랜치에 push 가 될 때 이 Workflow 가 트리거 됨
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 소스 코드르 체크아웃 (가져옴)
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Docker hub 로그인
+      - name: Log in to Docker hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      # 3. Docker 이미지 빌드
+      - name: Build Docker image
+        run: docker build -t yawning5/ec2study:latest .
+
+      # 4. Docker 이미지 푸시
+      - name: Push Docker image
+        run: docker push yawning5/ec2study:latest
