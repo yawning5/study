@@ -55,13 +55,26 @@ jobs:
           # passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }} # Passphrase 가 설정된 경우 사용
           port: 22
           script: |
-            docker pull yawning5/ec2study:latest
-            # 'ec2study'라는 이름의 실행 중인 컨테이너가 있으면 중지
-            if [ "$(docker ps -q -f name=ec2study)" ]; then
-              echo "Stopping and removing existing container 'ec2study'"
-              docker stop ec2study || true
-              docker rm ec2study || true
+            # 현재 날짜와 시간을 기반으로 버전 생성
+            VERSION=$(date +"%Y%m%d%H%M%S")
+
+            # 최신 이미지를 가져옵니다. 날짜 기반 태그 관리
+            docker pull yawning5/ec2study:$VERSION
+
+            # 'ec2study_$VERSION' 이름을 가진 컨테이너가 있으면 중지 및 삭제
+            if [ "$(docker ps -a -q -f name=ec2study_$VERSION)" ]; then
+              echo "Stopping and removing existing container 'ec2study_$VERSION'"
+              docker stop ec2study_$VERSION || true
+              docker rm ec2study_$VERSION || true
             fi
-            # 새로운 컨테이너 실행, 이름을 'ec2study'로 설정
-            docker run --name ec2study -d -p 8080:8080 yawning5/ec2study:latest
+
+            # 새로운 날짜 기반 버전의 컨테이너 실행
+            docker run --name ec2study_$VERSION -d -p 8080:8080 yawning5/ec2study:$VERSION
+
+            # 만약 이전 버전의 컨테이너가 존재한다면, 10개 이상 남기지 않도록 삭제
+            OLD_CONTAINERS=$(docker ps -a -q --filter "name=ec2study_" | wc -l)
+            if [ "$OLD_CONTAINERS" -gt 10 ]; then
+              echo "Removing old containers..."
+              docker ps -a -q --filter "name=ec2study_" | head -n -10 | xargs docker rm
+            fi
           debug: true
