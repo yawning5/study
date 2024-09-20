@@ -49,6 +49,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          # passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }} # Passphrase 가 설정된 경우 사용
           port: 22
           script: |
             docker pull yawning5/ec2study:latest
