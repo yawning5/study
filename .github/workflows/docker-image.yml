@@ -82,8 +82,11 @@ jobs:
             fi
 
             # 새로운 버전의 컨테이너 실행
-            echo "Running new container with version: $VERSION"
-            docker run --name ec2study_$VERSION -d -p 8080:8080 yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
+            echo "Running new container
+            docker stop ec2study
+            docker rmi ec2study
+            docker rm ec2study
+            docker run --name ec2study -d -p 8080:8080 yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
 
             # 만약 이전 버전의 컨테이너가 존재한다면, 10개 이상 남기지 않도록 삭제
             OLD_CONTAINERS=$(docker ps -a -q --filter "name=ec2study_" | wc -l)
