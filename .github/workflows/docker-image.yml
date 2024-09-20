@@ -40,13 +40,13 @@ jobs:
       # 3. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          VERSION=${{ github.sha }}
+          VERSION=$(date +"%Y%m%d%H%M%S")
           docker build -t yawning5/ec2study:$VERSION .
 
       # 4. Docker 이미지 푸시
       - name: Push Docker image
         run: |
-          VERSION=${{ github.sha }}
+          VERSION=$(date +"%Y%m%d%H%M%S")
           docker push yawning5/ec2study:$VERSION
 
       # CD SSH 를 통해 EC2 에 접속 및 컨테이너 실행
