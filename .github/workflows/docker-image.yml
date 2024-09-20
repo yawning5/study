@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            
+            # 이걸 넣으니까 해결 됐음 git hub 환경 변수에 설정한 VERSION 을 ec2 환경에 넘겨줘야함
             VERSION=${{ env.VERSION }}
             
             # EC2 내에서 동일한 버전 사용
