@@ -53,6 +53,13 @@ jobs:
           port: 22
           script: |
             docker pull yawning5/ec2study:latest
-            docker stop $(docker ps -q --filter ancestor=yawning5/ec2study:latest)
+
+#           실행 중인 컨테이너 중지, 중지할 컨테이너가 없더라도 우류 발생 방지
+            docker stop $(docker ps -q --filter ancestor=yawning5/ec2study:latest) || true
+                    
+#           중지된 컨테이너 삭제, 삭제할 컨테이너가 없더라도 오류 발생 방지
+            docker rm $(docker ps -q --filter ancestor=yawning5/ec2study:latest) || true
+                    
+#           새로운 컨테이너 실챙
             docker run --rm -d -p 8080:8080 yawning5/ec2study:latest
           debug: true
