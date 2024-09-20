@@ -64,8 +64,8 @@ jobs:
             # 'ec2study_$VERSION' 이름을 가진 컨테이너가 있으면 중지 및 삭제
             if [ "$(docker ps -a -q -f name=ec2study_$VERSION)" ]; then
               echo "Stopping and removing existing container 'ec2study_$VERSION'"
-              docker stop ec2study_$VERSION || true
-              docker rm ec2study_$VERSION || true
+              docker stop ec2study_$VERSION
+              docker rm ec2study_$VERSION
             fi
 
             # 새로운 날짜 기반 버전의 컨테이너 실행
