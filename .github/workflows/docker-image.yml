@@ -21,6 +21,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
+          # 해당 프로젝트가 zulu jdk17 사용하고 있기 때문에 zulu 선택
+          distribution: 'zulu'
+          check-latest: false
 
       # gradlew 실행 권한 부여
       - name: Grant execute permission for gradlew
