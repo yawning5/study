@@ -37,32 +37,30 @@ jobs:
       - name: Log in to Docker hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
+      # 버전 변수 설정 (초 단위가 아니라 분 단위로)
+      - name: Set version
+        id: set_version
+        run: echo "VERSION=$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
+
       # 3. Docker 이미지 빌드
       - name: Build Docker image
         run: |
-          VERSION=$(date +"%Y%m%d%H%M%S")
           docker build -t yawning5/ec2study:$VERSION .
 
       # 4. Docker 이미지 푸시
       - name: Push Docker image
         run: |
-          VERSION=$(date +"%Y%m%d%H%M%S")
           docker push yawning5/ec2study:$VERSION
 
-      # CD SSH 를 통해 EC2 에 접속 및 컨테이너 실행
+      # 5. CD SSH 를 통해 EC2 에 접속 및 컨테이너 실행
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          # passphrase: ${{ secrets.EC2_SSH_PASSPHRASE }} # Passphrase 가 설정된 경우 사용
-          port: 22
           script: |
-            # 현재 날짜와 시간을 기반으로 버전 생성
-            VERSION=$(date +"%Y%m%d%H%M%S")
-
-            # 최신 이미지를 가져옵니다. 날짜 기반 태그 관리
+            # EC2 내에서 동일한 버전 사용
             docker pull yawning5/ec2study:$VERSION
 
             # 'ec2study_$VERSION' 이름을 가진 컨테이너가 있으면 중지 및 삭제
@@ -72,7 +70,7 @@ jobs:
               docker rm ec2study_$VERSION || true
             fi
 
-            # 새로운 날짜 기반 버전의 컨테이너 실행
+            # 새로운 버전의 컨테이너 실행
             docker run --name ec2study_$VERSION -d -p 8080:8080 yawning5/ec2study:$VERSION
 
             # 만약 이전 버전의 컨테이너가 존재한다면, 10개 이상 남기지 않도록 삭제
