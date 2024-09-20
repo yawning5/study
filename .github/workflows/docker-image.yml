@@ -39,11 +39,15 @@ jobs:
 
       # 3. Docker 이미지 빌드
       - name: Build Docker image
-        run: docker build -t yawning5/ec2study:latest .
+        run: |
+          VERSION=${{ github.sha }}
+          docker build -t yawning5/ec2study:$VERSION .
 
       # 4. Docker 이미지 푸시
       - name: Push Docker image
-        run: docker push yawning5/ec2study:latest
+        run: |
+          VERSION=${{ github.sha }}
+          docker push yawning5/ec2study:$VERSION
 
       # CD SSH 를 통해 EC2 에 접속 및 컨테이너 실행
       - name: Deploy to EC2
@@ -64,8 +68,8 @@ jobs:
             # 'ec2study_$VERSION' 이름을 가진 컨테이너가 있으면 중지 및 삭제
             if [ "$(docker ps -a -q -f name=ec2study_$VERSION)" ]; then
               echo "Stopping and removing existing container 'ec2study_$VERSION'"
-              docker stop ec2study_$VERSION
-              docker rm ec2study_$VERSION
+              docker stop ec2study_$VERSION || true
+              docker rm ec2study_$VERSION || true
             fi
 
             # 새로운 날짜 기반 버전의 컨테이너 실행
