@@ -37,7 +37,7 @@ jobs:
       - name: Log in to Docker hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # 2. 버전 변수 설정 (분 단위로 고정된 버전)
+      # 버전 변수 설정 (분 단위로 고정된 버전)
       - name: Set version
         id: set_version
         run: echo "VERSION=$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
@@ -84,6 +84,5 @@ jobs:
             # 새로운 버전의 컨테이너 실행
             echo "Running new container"
             docker stop ec2study
-            docker rmi ec2study
             docker rm ec2study
             docker run --name ec2study -d -p 8080:8080 yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
