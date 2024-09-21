@@ -86,9 +86,8 @@ jobs:
             docker stop ec2study
             docker rm ec2study
             docker run --name ec2study -d -p 8080:8080 yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
+            
+            # Docker 이미지를 최신 20개만 남기고 나머지는 삭제
+            KEEP_IMAGES=20
+            docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | tail -n +$((KEEP_IMAGES + 1)) | awk '{print $2}' | xargs -r docker rmi
 
-      # Docker 이미지를 최신 20개만 남김
-      - name: List and clean Docker images
-        run: |
-          KEEP_IMAGES=20
-          docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | tail -n +$((KEEP_IMAGES + 1)) | awk '{print $2}' | xargs -r docker rmi
