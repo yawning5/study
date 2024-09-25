@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -29,6 +30,24 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 );
 
+        /*
+        Post 작업을 할때 csrf 토큰을 보내줘야 필터를 통과함
+         */
+        httpSecurity
+                .csrf(AbstractHttpConfigurer::disable);
+
+        httpSecurity
+                /*
+                권한이 없는 유저가 권한이 필요한 페이지로 들어갈때 띄워주는 로그인 페이지 설정
+                 */
+                .formLogin(auth -> auth
+                        .loginPage("/login")
+                        /*
+                        프론트에서 로그인 데이터를 넘기면 시큐리티가 받아서 로그인 처리를 진행
+                         */
+                        .loginProcessingUrl("/loginProc")
+                        .permitAll()
+                );
 
 
         return httpSecurity.build();
