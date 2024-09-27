@@ -23,6 +23,9 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+    # 아래 설정 따로 안 해줘도 아래처럼 동작함
+    naming:
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
