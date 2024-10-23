@@ -21,7 +21,7 @@ public class JoinService {
     public void joinProcess(JoinDTO joinDTO) {
 
         // db 에 이미 동일한 username 을 가진 회원이 존재하는지?
-        boolean isUser = userRepository.existByUsername(joinDTO.getUsername());
+        boolean isUser = userRepository.existsByUsername(joinDTO.getUsername());
         if (isUser) {
             return;
         }
@@ -30,7 +30,7 @@ public class JoinService {
 
         data.setUsername(joinDTO.getUsername());
         data.setPassword(passwordEncoder.encode(joinDTO.getPassword()));
-        data.setRole("ROLE_USER");
+        data.setRole("ROLE_ADMIN");
 
         userRepository.save(data);
     }

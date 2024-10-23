@@ -9,6 +9,6 @@ public class AdminController {
     @GetMapping("/admin")
     public String adiminP() {
 
-        return "adimin";
+        return "admin";
     }
 }

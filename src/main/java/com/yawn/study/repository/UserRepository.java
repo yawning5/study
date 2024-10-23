@@ -10,5 +10,7 @@ ID: 엔티티의 식별자(Primary Key)의 타입
  */
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
-    boolean existByUsername(String username);
+    boolean existsByUsername(String username);
+
+    UserEntity findByUsername(String username);
 }
