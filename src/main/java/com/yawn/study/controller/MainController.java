@@ -14,7 +14,8 @@ import java.util.Iterator;
 public class MainController {
 
     /**
-     * Model 클래스는
+     * Model 은 서버사이드 렌더링 방식으로 서버를 구현할때
+     * 서버에서 뷰로 데이터를 전달하는 상황에 사용한다
      * @param model
      * @return
      */
