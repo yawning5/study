@@ -16,6 +16,7 @@ public class MainController {
     /**
      * Model 은 서버사이드 렌더링 방식으로 서버를 구현할때
      * 서버에서 뷰로 데이터를 전달하는 상황에 사용한다
+     * Model 이 인자에 있어서 헷갈릴 수 있지만 이건 뷰에서 주는게 아니라 스프링에서 넣어주는 것
      * @param model
      * @return
      */
@@ -29,6 +30,7 @@ public class MainController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         String id = authentication.getName();
+
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();

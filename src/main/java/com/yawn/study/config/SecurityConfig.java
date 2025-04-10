@@ -45,7 +45,7 @@ public class SecurityConfig {
         Post 작업을 할때 csrf 토큰을 보내줘야 필터를 통과함
          */
         httpSecurity
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf(auth -> auth.disable());
 
         httpSecurity
                 /*
@@ -59,6 +59,16 @@ public class SecurityConfig {
                         .loginProcessingUrl("/loginProc")
                         .permitAll()
                 );
+
+        httpSecurity
+                .sessionManagement(auth -> auth
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(true));
+
+        httpSecurity
+                .sessionManagement(auth -> auth
+                        .sessionFixation().changeSessionId());
+
 
 
         return httpSecurity.build();

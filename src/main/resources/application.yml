@@ -39,7 +39,12 @@ spring:
     ansi:
       enabled: ALWAYS
 
-#  security:
-#    user:
-#      name: user
-#      password: 1234
+  security:
+    user:
+      name: user
+      password: 1234
+
+server:
+  servlet:
+    session:
+      timeout=90m:
