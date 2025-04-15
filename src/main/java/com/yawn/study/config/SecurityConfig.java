@@ -1,12 +1,24 @@
 package com.yawn.study.config;
 
+import com.yawn.study.service.CustomUserDetailsService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.List;
 
 @Configuration
 
@@ -20,6 +32,12 @@ Spring 이 해당 클래스에서 제공하는 보안 설정을 적용함
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
     /*
     Bean 으로 등록하면 Spring 컨테이너에 등록되어
     의존성 주입을 통해 어디서든 사용 가능하게 함
@@ -31,9 +49,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        httpSecurity
+        // 아래에 커스텀 인증매니저 만든 것을 사용한다고 등록
+        http
+                .authenticationManager(authenticationManager());
+
+        http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/loginProc", "/join", "/joinProc").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
@@ -47,7 +69,7 @@ public class SecurityConfig {
 //        httpSecurity
 //                .csrf(auth -> auth.disable());
 
-        httpSecurity
+        http
                 /*
                 권한이 없는 유저가 권한이 필요한 페이지로 들어갈때 띄워주는 로그인 페이지 설정
                  */
@@ -60,17 +82,45 @@ public class SecurityConfig {
                         .permitAll()
                 );
 
-        httpSecurity
+        http
                 .sessionManagement(auth -> auth
                         .maximumSessions(1)
                         .maxSessionsPreventsLogin(true));
 
-        httpSecurity
+        http
                 .sessionManagement(auth -> auth
                         .sessionFixation().changeSessionId());
 
 
 
-        return httpSecurity.build();
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+
+        // ✅ 1. DB 인증 제공자
+        DaoAuthenticationProvider dbProvider = new DaoAuthenticationProvider();
+        dbProvider.setUserDetailsService(customUserDetailsService);
+        dbProvider.setPasswordEncoder(bCryptPasswordEncoder());
+
+        // ✅ 2. 인메모리 admin 유저
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(bCryptPasswordEncoder().encode("1234"))
+                .roles("ADMIN")
+                .build();
+
+        // 인메모리 유저 만든것을 등록
+        InMemoryUserDetailsManager memoryUserDetailsManager = new InMemoryUserDetailsManager(admin);
+
+        DaoAuthenticationProvider memoryProvider = new DaoAuthenticationProvider();
+        memoryProvider.setUserDetailsService(memoryUserDetailsManager);
+        memoryProvider.setPasswordEncoder(bCryptPasswordEncoder());
+
+        return new ProviderManager(List.of(
+                memoryProvider,  // 먼저 시도
+                dbProvider       // 실패하면 DB
+        ));
     }
 }
