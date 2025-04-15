@@ -44,8 +44,8 @@ public class SecurityConfig {
         /*
         Post 작업을 할때 csrf 토큰을 보내줘야 필터를 통과함
          */
-        httpSecurity
-                .csrf(auth -> auth.disable());
+//        httpSecurity
+//                .csrf(auth -> auth.disable());
 
         httpSecurity
                 /*
