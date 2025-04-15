@@ -4,6 +4,8 @@ import com.yawn.study.service.CustomUserDetailsService;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -49,6 +51,37 @@ public class SecurityConfig {
     }
 
     @Bean
+    public RoleHierarchy roleHierarchy() {
+
+        return RoleHierarchyImpl.fromHierarchy("""
+            ROLE_C > ROLE_B
+            ROLE_B > ROLE_A
+            """);
+    }
+
+    // 아래는 접두사를 수정할 수 있고 한 번만 써도 되는 버전
+
+//    @Bean
+//    public RoleHierarchy roleHierarchy() {
+//
+//        return RoleHierarchyImpl.withRolePrefix("접두사_")
+//                .role("C").implies("B")
+//                .role("B").implies("A")
+//                .build();
+//    }
+
+    // 아래는 기본 ROLE_ 접두사를 붙이고 한 번만 써도 되는 버전
+
+//    @Bean
+//    public RoleHierarchy roleHierarchy() {
+//
+//        return RoleHierarchyImpl.withDefaultRolePrefix() // withDefaultRolePrefix() -> ROLE_ 을 붙여줌
+//                .role("C").implies("B")
+//                .role("B").implies("A")
+//                .build();
+//    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // 아래에 커스텀 인증매니저 만든 것을 사용한다고 등록
@@ -57,9 +90,10 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/loginProc", "/join", "/joinProc").permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/").hasAnyRole("A")
+                        .requestMatchers("/manager").hasAnyRole("B")
+                        .requestMatchers("/admin").hasAnyRole("C")
                         .anyRequest().authenticated()
                 );
 
@@ -108,7 +142,7 @@ public class SecurityConfig {
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(bCryptPasswordEncoder().encode("1234"))
-                .roles("ADMIN")
+                .roles("C")
                 .build();
 
         // 인메모리 유저 만든것을 등록
