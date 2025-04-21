@@ -85,7 +85,12 @@ jobs:
             echo "Running new container"
             docker stop ec2study
             docker rm ec2study
-            docker run --name ec2study -d -p 8080:8080 yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
+            docker run --name ec2study -d -p 8080:8080 \
+            -e SPRING_PROFILES_ACTIVE=prod \
+            -e RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }} \
+            -e RDS_DB_NAME=${{ secrets.RDS_USERNAME }} \
+            -e RDS_PASSWORD=${{ secrets.RDS_PASSWORD}} \
+            yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
             
             # Docker 이미지를 최신 20개만 남기고 나머지는 삭제
             KEEP_IMAGES=20
