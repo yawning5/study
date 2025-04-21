@@ -17,6 +17,7 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
 
-logging:
-  level:
-    com.zaxxer.hikari: DEBUG
+# rds 연결 문제 해결되고 주석처리
+#logging:
+#  level:
+#    com.zaxxer.hikari: DEBUG
