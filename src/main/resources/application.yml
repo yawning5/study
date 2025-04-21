@@ -1,7 +1,7 @@
 spring:
-  profiles:
-    active: local #workflows 파일에서 ec2 에선 prod 로 덮어쓰게 변수 설정 해놓음
-
+  config:
+   activate:
+    on-profile: local
   # 공통 ANSI 컬러 로그 설정
   output:
     ansi:
