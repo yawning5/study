@@ -87,14 +87,16 @@ jobs:
             docker rm ec2study
             docker run --name ec2study -d -p 8080:8080 \
             -e SPRING_PROFILES_ACTIVE=prod \
-            -e RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }} \
-            -e RDS_DB_NAME=${{ secrets.RDS_DB_NAME }} \
-            -e RDS_USERNAME=${{ secrets.RDS_USERNAME }} \
-            -e RDS_PASSWORD=${{ secrets.RDS_PASSWORD}} \
-            -e RDS_PORT=${{ secrets.RDS_PORT}} \
+            -e RDS_ENDPOINT="${{ secrets.RDS_ENDPOINT }}" \
+            -e RDS_PORT="${{ secrets.RDS_PORT }}" \
+            -e RDS_DB_NAME="${{ secrets.RDS_DB_NAME }}" \
+            -e RDS_USERNAME="${{ secrets.RDS_USERNAME }}" \
+            -e RDS_PASSWORD="${{ secrets.RDS_PASSWORD }}" \
             yawning5/ec2study:$VERSION || echo "Error: Failed to run container"
             
             # Docker 이미지를 최신 20개만 남기고 나머지는 삭제
             KEEP_IMAGES=20
-            docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" | tail -n +$((KEEP_IMAGES + 1)) | awk '{print $2}' | xargs -r docker rmi
-
+            docker images --format "{{.Repository}}:{{.Tag}} {{.ID}}" \
+            | tail -n +$((KEEP_IMAGES + 1)) \
+            | awk '{print $2}' \
+            | xargs -r docker rmi
