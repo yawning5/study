@@ -1,18 +1,26 @@
 package com.yawn.study.memeber.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.yawn.study.board.entity.Board;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
 public class Member {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String email;
+    private String password;
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+
+
 }
