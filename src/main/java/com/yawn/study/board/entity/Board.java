@@ -2,11 +2,13 @@ package com.yawn.study.board.entity;
 
 import com.yawn.study.memeber.entity.Member;
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
