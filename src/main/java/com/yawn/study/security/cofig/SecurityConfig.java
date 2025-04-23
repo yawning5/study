@@ -1,5 +1,8 @@
 package com.yawn.study.security.cofig;
 
+import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.http.Rfc6265CookieProcessor;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,5 +68,22 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         return http.build();
+    }
+
+    /*
+     크롬에서 Cross-site 요청시 SameSite=None + Secure 가 없는 쿠키는 무조건 차단해서
+     추가한 설정 jwt 인증방식이 최종이 될텐데 그때는 session 방식을 쓰지않고
+     jwt 도 헤더에 담아 보내기 때문에 비활성화 예정 -> 따로 분리하지 않음
+     */
+
+    @Bean
+    public TomcatServletWebServerFactory cookieFactory() {
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.addContextCustomizers(context -> {
+            Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
+            cookieProcessor.setSameSiteCookies("None");
+            context.setCookieProcessor(cookieProcessor);
+        });
+        return factory;
     }
 }
