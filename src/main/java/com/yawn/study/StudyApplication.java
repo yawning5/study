@@ -18,12 +18,12 @@ public class StudyApplication {
 
 	public final MemberRepository memberRepository;
 
-	@Bean
-	CommandLineRunner init(MemberRepository memberRepository) {
-		return args -> {
-			Member member = new Member();
-			member.setName("test-user");
-			memberRepository.save(member);
-		};
-	}
+//	@Bean
+//	CommandLineRunner init(MemberRepository memberRepository) {
+//		return args -> {
+//			Member member = new Member();
+//			member.setName("test-user");
+//			memberRepository.save(member);
+//		};
+//	}
 }

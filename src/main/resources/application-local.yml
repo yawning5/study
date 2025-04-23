@@ -19,3 +19,11 @@ spring:
   h2:
     console:
       enabled: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
