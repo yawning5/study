@@ -27,3 +27,6 @@ server:
   servlet:
     session:
       tracking-modes: cookie
+
+jwt:
+  secret: fkalj3askjdfjakjsdfkjj3adsfasdfasdfsadfasdfadsfadsfadsfadsfasdafdsfds
