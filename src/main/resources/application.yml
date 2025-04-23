@@ -7,7 +7,8 @@ spring:
     ansi:
       enabled: ALWAYS
 
-
+jwt:
+  secret: fkalj3askjdfjakjsdfkjj3adsfasdfasdfsadfasdfadsfadsfadsfadsfasdafdsfds
 
 #--- 공통 설정 과 로컬 및 서버 설정 분리 전 설정 ---
 #spring:
