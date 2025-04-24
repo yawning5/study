@@ -1,6 +1,12 @@
 # ☕ Spring Backend Portfolio
 내가 학습한 기술들을 직접 구현하고 배포한 실전 백엔드 프로젝트
 
+학습내용 정리
+https://www.notion.so/Study-1b4daed3c94981d5a271c81640307db0
+
+웹 배포 기능 테스트
+http://yawn-study-bucket.s3-website.ap-northeast-2.amazonaws.com/
+
 Spring Version: 3.3.3
 <br/>
 Java: 17
