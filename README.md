@@ -6,6 +6,8 @@ https://www.notion.so/Study-1b4daed3c94981d5a271c81640307db0
 
 웹 배포 기능 테스트
 http://yawn-study-bucket.s3-website.ap-northeast-2.amazonaws.com/
+<br/>
+접속이 안 될경우 https 로 접속된걸 수도 있어 프로토콜 확인필요
 
 Spring Version: 3.3.3
 <br/>
