@@ -1,11 +1,13 @@
 package com.yawn.study.memeber.entity;
 
 import com.yawn.study.board.entity.Board;
+import com.yawn.study.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -27,6 +30,12 @@ public class Member {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "member")
+    private List<Board> boards;
+
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments;
 
     @Builder
     public Member(String email,
