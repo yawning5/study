@@ -70,6 +70,6 @@ public class AuthController {
     @GetMapping("/test")
     public ResponseEntity<?> test(HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails user) {
         log.info("현재 로그인한 사용자: {}", user.getUserNickname());
-        return ResponseEntity.ok(user.getUsername());
+        return ResponseEntity.ok(user.getUserNickname());
     }
 }
