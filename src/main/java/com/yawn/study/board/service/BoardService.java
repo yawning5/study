@@ -90,12 +90,11 @@ public class BoardService {
 //            log.info("댓글 정보 없음");
 //        }
 
-        CommentResponseDto first = responseDto.getComments().get(0);
-        log.info("매핑 이후 댓글 ID: {}, 내용: {}, 작성자: {}, 게시글 ID: {}",
-                first.getId(),
-                first.getContent(),
-                first.getNickname(),
-                first.getBoardId());
+        responseDto.getComments().stream().findFirst().ifPresentOrElse(
+                first -> log.info("매핑 이후 댓글 ID: {}, 내용: {}, 작성자: {}, 게시글 ID: {}",
+                        first.getId(), first.getContent(), first.getNickname(), first.getBoardId()),
+                () -> log.info("매핑 이후 댓글이 존재하지 않습니다.")
+        );
 
         return responseDto;
     }
