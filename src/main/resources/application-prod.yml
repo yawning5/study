@@ -21,3 +21,6 @@ spring:
 #logging:
 #  level:
 #    com.zaxxer.hikari: DEBUG
+
+jwt:
+  secret: fkalj3askjdfjakjsdfkjj3adsfasdfasdfsadfasdfadsfadsfadsfadsfasdafdsfds

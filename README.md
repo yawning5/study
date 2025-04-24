@@ -58,7 +58,6 @@ Java: 17
 
 </details>
 
-
 ---
 
 ## API
@@ -230,4 +229,3 @@ Java: 17
 | **응답 코드** | `204 No Content` |
 
 </details>
-
