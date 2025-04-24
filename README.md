@@ -62,6 +62,12 @@ Java: 17
 
 ---
 
+## 스키마
+
+![Image](https://github.com/user-attachments/assets/f5dd942b-a99c-4b14-a522-d2dc35916506)
+
+---
+
 ## API
 
 <details>
