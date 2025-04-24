@@ -1,5 +1,5 @@
 # ☕ Spring Backend Portfolio
-내가 학습한 기술들을 직접 구현하고 배포한 실전 백엔드 프로젝트
+내가 학습한 기술들을 직접 구현하고 배포한 성장형 실전 백엔드 프로젝트
 
 학습내용 정리
 https://www.notion.so/Study-1b4daed3c94981d5a271c81640307db0
