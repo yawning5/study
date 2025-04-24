@@ -57,9 +57,11 @@ Java: 17
 | `SPRING_PROFILES_ACTIVE` | 스프링 프로파일 (local, prod 등) | `local`                          |
 
 </details>
+
+
 ---
 
-###API
+## API
 
 <details>
 <summary>🔐 로그인 API</summary>
