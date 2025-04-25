@@ -25,6 +25,7 @@ Java: 17
 ## 🛠️ 사용 기술 스택
 
 <p align="center">
+  <img src="https://img.shields.io/badge/SpringMVC-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringJPA-007396?style=for-the-badge&logo=hibernate&logoColor=white"/>
