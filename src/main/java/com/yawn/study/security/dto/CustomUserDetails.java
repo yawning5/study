@@ -1,6 +1,6 @@
 package com.yawn.study.security.dto;
 
-import com.yawn.study.memeber.entity.Member;
+import com.yawn.study.member.entity.Member;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,15 +1,13 @@
-package com.yawn.study.memeber.entity;
+package com.yawn.study.member.entity;
 
 import com.yawn.study.board.entity.Board;
 import com.yawn.study.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,18 +1,17 @@
-package com.yawn.study.memeber.service;
+package com.yawn.study.member.service;
 
 import com.yawn.study.board.entity.Board;
 import com.yawn.study.board.repository.BoardRepository;
 import com.yawn.study.comment.entity.Comment;
 import com.yawn.study.comment.repository.CommentRepositroy;
-import com.yawn.study.memeber.dto.MemberPostDto;
-import com.yawn.study.memeber.dto.MemberResponseDto;
-import com.yawn.study.memeber.dto.MyPageResponseDto;
-import com.yawn.study.memeber.entity.Member;
-import com.yawn.study.memeber.exception.EmailAlreadyExistsException;
-import com.yawn.study.memeber.mapper.MemberMapper;
-import com.yawn.study.memeber.repository.MemberRepository;
+import com.yawn.study.member.dto.MemberPostDto;
+import com.yawn.study.member.dto.MemberResponseDto;
+import com.yawn.study.member.dto.MyPageResponseDto;
+import com.yawn.study.member.entity.Member;
+import com.yawn.study.member.exception.EmailAlreadyExistsException;
+import com.yawn.study.member.mapper.MemberMapper;
+import com.yawn.study.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Comments;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
