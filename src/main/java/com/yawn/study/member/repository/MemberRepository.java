@@ -1,14 +1,9 @@
-package com.yawn.study.memeber.repository;
+package com.yawn.study.member.repository;
 
-import com.yawn.study.comment.entity.Comment;
-import com.yawn.study.memeber.entity.Member;
+import com.yawn.study.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
-import java.util.List;
 import java.util.Optional;
 
 @Repository

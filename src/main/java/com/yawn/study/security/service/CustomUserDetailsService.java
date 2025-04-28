@@ -1,6 +1,6 @@
 package com.yawn.study.security.service;
 
-import com.yawn.study.memeber.repository.MemberRepository;
+import com.yawn.study.member.repository.MemberRepository;
 import com.yawn.study.security.dto.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

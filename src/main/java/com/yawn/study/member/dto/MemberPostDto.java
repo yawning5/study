@@ -1,4 +1,4 @@
-package com.yawn.study.memeber.dto;
+package com.yawn.study.member.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

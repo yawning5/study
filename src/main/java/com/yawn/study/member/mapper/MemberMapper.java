@@ -1,12 +1,12 @@
-package com.yawn.study.memeber.mapper;
+package com.yawn.study.member.mapper;
 
 import com.yawn.study.board.entity.Board;
 import com.yawn.study.board.mapper.BoardMapper;
 import com.yawn.study.comment.entity.Comment;
 import com.yawn.study.comment.mapper.CommentMapper;
-import com.yawn.study.memeber.dto.MemberPostDto;
-import com.yawn.study.memeber.dto.MyPageResponseDto;
-import com.yawn.study.memeber.entity.Member;
+import com.yawn.study.member.dto.MemberPostDto;
+import com.yawn.study.member.dto.MyPageResponseDto;
+import com.yawn.study.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

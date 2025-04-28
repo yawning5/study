@@ -1,8 +1,6 @@
 package com.yawn.study.board.dto;
 
 import com.yawn.study.comment.dto.CommentResponseDto;
-import com.yawn.study.comment.entity.Comment;
-import com.yawn.study.memeber.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
