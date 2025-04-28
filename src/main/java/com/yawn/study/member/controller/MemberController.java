@@ -1,9 +1,9 @@
-package com.yawn.study.memeber.controller;
+package com.yawn.study.member.controller;
 
-import com.yawn.study.memeber.dto.MemberPostDto;
-import com.yawn.study.memeber.dto.MemberResponseDto;
-import com.yawn.study.memeber.dto.MyPageResponseDto;
-import com.yawn.study.memeber.service.MemberService;
+import com.yawn.study.member.dto.MemberPostDto;
+import com.yawn.study.member.dto.MemberResponseDto;
+import com.yawn.study.member.dto.MyPageResponseDto;
+import com.yawn.study.member.service.MemberService;
 import com.yawn.study.security.dto.CustomUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.net.URI;
-import java.util.Objects;
 
 @Slf4j
 @Controller

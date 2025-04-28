@@ -1,6 +1,5 @@
-package com.yawn.study.memeber.dto;
+package com.yawn.study.member.dto;
 
-import com.yawn.study.board.dto.BoardResponseDto;
 import com.yawn.study.board.dto.MyPageBoardResponseDto;
 import com.yawn.study.comment.dto.CommentResponseDto;
 import lombok.AllArgsConstructor;

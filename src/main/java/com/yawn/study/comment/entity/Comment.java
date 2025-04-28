@@ -1,7 +1,7 @@
 package com.yawn.study.comment.entity;
 
 import com.yawn.study.board.entity.Board;
-import com.yawn.study.memeber.entity.Member;
+import com.yawn.study.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
