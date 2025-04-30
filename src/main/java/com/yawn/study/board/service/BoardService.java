@@ -33,21 +33,26 @@ public class BoardService {
         this.memberRepository = memberRepository;
     }
 
+    @Transactional
     public BoardPostResponseDto boardPost(BoardPostDto postDto,
                                           String Email) {
         log.info("보드포스트 서비스 시작");
         log.info("제목: {}, 내용: {}", postDto.getTitle(), postDto.getContent());
         Board board = boardMapper.toBoard(postDto);
         log.info("보드매퍼 적용후 제목: {}, 내용: {}", board.getTitle(), board.getContent());
+
         Member member = memberRepository.findByEmail(Email)
                 .orElseThrow(() -> new IllegalArgumentException("작성자 없음"));
         board.setBoardCreator(member);
         log.info("게시물 게시자 닉네임: {}, 이메일: {}", board.getMember().getNickname(), board.getMember().getEmail());
+
         board = boardRepository.save(board);
         log.info("게시물 id: {}", board.getId());
+
         return boardMapper.toBoardPostResponseDto(board);
     }
 
+    @Transactional(readOnly = true)
     public BoardResponseDto boardRead(long boardId) {
         log.info("보드리드 서비스 시작");
         log.info("조회 요청한 보드 id: {}", boardId);
@@ -55,38 +60,12 @@ public class BoardService {
         Board board = boardRepository.findByIdWithAll(boardId)
                 .orElseThrow(() -> new NoSuchElementException("게시글 존재하지 않음"));
 
-        // 오류관련 확인이 끝나서 간소화
-//        log.info("Board 작성자: {}", board.getMember() != null ? board.getMember().getNickname() : "null");
-//        if (board.getComments() != null) {
-//            for (Comment comment : board.getComments()) {
-//                log.info("DB 로그 댓글 ID: {}, 내용: {}, 작성자: {}, 소속 게시판 ID: {}",
-//                        comment.getId(),
-//                        comment.getContent(),
-//                        comment.getMember() != null ? comment.getMember().getNickname() : "null",
-//                        comment.getBoard() != null ? comment.getBoard().getId() : "null");
-//            }
-//        } else {
-//            log.info("댓글 리스트가 null입니다.");
-//        }
-
         log.info("매핑 전 게시글 ID: {}, 제목: {}, 작성자: {}",
                 board.getId(),
                 board.getTitle(),
                 board.getMember() != null ? board.getMember().getNickname() : "null");
 
-         BoardResponseDto responseDto = boardMapper.toBoardResponseDto(board);
-
-//        if (responseDto.getComments() != null) {
-//            for (CommentResponseDto commentDto : responseDto.getComments()) {
-//                log.info("매핑 이후 댓글 ID: {}, 댓글 작성자: {}, 소속 게시글 ID: {}, 내용: {}",
-//                        commentDto.getId(),
-//                        commentDto.getNickname() != null ? commentDto.getNickname() : "닉네임 없음",
-//                        commentDto.getBoardId() != null ? commentDto.getBoardId() : "게시글 ID 없음",
-//                        commentDto.getContent());
-//            }
-//        } else {
-//            log.info("댓글 정보 없음");
-//        }
+        BoardResponseDto responseDto = boardMapper.toBoardResponseDto(board);
 
         responseDto.getComments().stream().findFirst().ifPresentOrElse(
                 first -> log.info("매핑 이후 댓글 ID: {}, 내용: {}, 작성자: {}, 게시글 ID: {}",
@@ -97,9 +76,11 @@ public class BoardService {
         return responseDto;
     }
 
+    @Transactional(readOnly = true)
     public List<BoardListResponseDto> findAllBoards() {
+        log.info("모든 게시글 조회 요청 진입");
         return boardRepository.findAll().stream()
-                .map(boardMapper::toBoardListDto)
+                .map(boardMapper::toBoardListResponseDto)
                 .collect(Collectors.toList());
     }
 
@@ -127,16 +108,25 @@ public class BoardService {
         return boardMapper.toBoardPostResponseDto(board);
     }
 
+    @Transactional
     public void boardDelete(String email,
                             long boardId) {
+        log.info("게시글 삭제 요청 진입 - email: {}, board: {}", email, boardId);
+
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new NoSuchElementException("게시글 존재하지 않음"));
+                .orElseThrow(() -> {
+                    log.warn("삭제 실패 - 존재하지 않는 게시글, boardId: {}", boardId);
+                    return new NoSuchElementException("게시글 존재하지 않음");
+                });
 
         if (!email.equals(board.getMember().getEmail())) {
+            log.warn("삭제 실패 - 작성자 불일치, 요청자: {}, 실제 작성자: {}",
+                    email, board.getMember().getEmail());
             throw new IllegalArgumentException("작성자만 게시글을 삭제할 수 있습니다");
         }
 
         boardRepository.deleteById(boardId);
+        log.info("게시글 삭제 성공 - boardId: {}", boardId);
     }
 
 }
