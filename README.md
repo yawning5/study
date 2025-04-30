@@ -22,8 +22,7 @@ Java: 17
 
 ---
 
-## 🛠️ 사용 기술 스택
-
+## 🛠️ 기술 스택 및 역할
 <p align="center">
   <img src="https://img.shields.io/badge/SpringMVC-6DB33F?style=for-the-badge&logo=spring&logoColor=white"/>
   <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
@@ -39,20 +38,42 @@ Java: 17
   <img src="https://img.shields.io/badge/S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"/>
 </p>
 
+| 기술 | 사용 목적 |
+|------|-----------|
+| Java 17 | 백엔드 개발 언어 |
+| Spring Boot 3.3.3 | 프로젝트 전반 구성 |
+| Spring Security 6.x | JWT 인증/인가 처리 (Filter + SecurityFilterChain 구성) |
+| JPA + Hibernate | ORM 기반 DB 연동, 연관관계 설정 |
+| MySQL (RDS) | 운영 DB |
+| AWS EC2 | 백엔드 서버 배포 |
+| AWS S3 | 프론트 정적 페이지 배포 |
+| Docker | 컨테이너 빌드 및 이미지화 |
+| GitHub Actions | CI/CD 자동화 |
+| REST API | 클라이언트 통신용 API 설계 |
+
 ---
 
-## 📦 Spring 서버 배포 파이프라인
+## 🧩 프로젝트 구조 및 기능 요약
 
-![Image](https://github.com/user-attachments/assets/fb8210c2-2408-4660-9068-730d8583732f)
+- 회원 가입 / 로그인 (JWT 기반 인증)
+- 게시글 CRUD (등록/조회/수정/삭제)
+- 댓글 CRUD (게시글 기반 등록/조회/수정/삭제)
+- 마이페이지 (내 게시글 + 내 댓글 조회)
+- 예외 처리 공통화 (GlobalExceptionHandler)
+- 환경별 설정 분리 (application.yml - `local`, `prod`)
+
+---
+
+## 🧭 시스템 구성도
+
+### 📦 Spring 서버 배포 파이프라인
+![배포 파이프라인](https://github.com/user-attachments/assets/fb8210c2-2408-4660-9068-730d8583732f)
+
+### 🌐 클라이언트 ↔ 백엔드 요청 흐름
+![요청 흐름도](https://github.com/user-attachments/assets/b88b0ce3-6921-4f1c-a748-d9563a072104)
 
 ---
 
-## 🌐 클라이언트 - 서버 요청 흐름도
-
-![Image](https://github.com/user-attachments/assets/b88b0ce3-6921-4f1c-a748-d9563a072104) 
-
-
----
 <details>
 <summary>🛠️ 실행에 필요한 환경변수 </summary>
 
