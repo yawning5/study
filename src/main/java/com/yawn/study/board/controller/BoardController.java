@@ -30,10 +30,11 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<?> postBoard(@RequestBody BoardPostDto postDto,
                                        @AuthenticationPrincipal CustomUserDetails  userDetails) {
-        log.info("보드컨트롤러 시작");
-        log.info("요청자 이메일: {}", userDetails.getUsername());
+        log.info("게시글 등록 요청 - 요청자 이메일: {}", userDetails.getUsername());
+
         BoardPostResponseDto boardPostResponseDto = boardService.boardPost(postDto, userDetails.getUsername());
-        log.info("저장된 게시물의 요청자: {}", boardPostResponseDto.getEmail());
+        log.info("등록된 게시물의 요청자: {}", boardPostResponseDto.getEmail());
+
         URI location = URI.create("/board/" + boardPostResponseDto.getId());
 
         return ResponseEntity
@@ -47,8 +48,10 @@ public class BoardController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<BoardResponseDto> readBoard(@PathVariable("id") long boardId) {
+        log.info("게시글 열람 요청 - 열람 시도 게시글 Id: {}", boardId);
 
         BoardResponseDto response = boardService.boardRead(boardId);
+        log.info("열람 시도된 게시글의 Id: {}", response.getId());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -57,7 +60,11 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<List<BoardListResponseDto>> getAllBoards() {
+        log.info("모든 게시물 열람 요청");
+
         List<BoardListResponseDto> boards = boardService.findAllBoards();
+        log.info("조회 결과 개수: {}", boards.size());
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(boards);
@@ -80,8 +87,10 @@ public class BoardController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBoard(@PathVariable("id") long boardId,
                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
+        log.info("게시글 삭제 요청 - 요청자 Id: {}, 삭제 요청 게시글 Id:{}", userDetails.getUsername(), boardId);
 
         boardService.boardDelete(userDetails.getUsername(), boardId);
+        log.info("삭제완료");
 
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)

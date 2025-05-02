@@ -19,7 +19,7 @@ public interface BoardMapper {
 
     @Mapping(target = "nickname", source = "member.nickname")
     @Mapping(target = "commentCount", expression = "java(board.getComments() != null ? board.getComments().size() : 0)")
-    BoardListResponseDto toBoardListDto(Board board);
+    BoardListResponseDto toBoardListResponseDto(Board board);
 
     @Mapping(target = "nickname", source = "member.nickname")
     @Mapping(target = "comments", source = "comments")
